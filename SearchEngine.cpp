@@ -10,6 +10,30 @@ bool is_in(string str, char c){
     return false;
 }
 
+// function to print out matched result formatted
+void print(const vector<string> &result){
+    int count = 0;
+    for (const auto &i : result) {
+        cout << i;
+        for (int x = 0; x < 16 - i.length(); x++) {
+            cout << " ";
+        }
+        count += 1;
+
+        if (count % 6 == 0) {
+            cout << endl;
+        }
+    }
+    cout << endl;
+}
+
+// custom rule to sort vector by length
+struct compare {
+    bool operator()(const std::string& first, const std::string& second) {
+        return first.size() > second.size();
+    }
+} rule;
+
 SE::SE() {
     dict = new vector <string>; // create dict on heap
 
@@ -108,29 +132,44 @@ void SE::search_dict() {
             // not a match, do nothing
         }
     }
+    cout << match_count << " Word Matched" << endl;
 }
 
 void SE::display_result() {
+    // sort everything by length
+    sort(S1_5.begin(), S1_5.end(), rule);
+    sort(S6_9.begin(), S6_9.end(), rule);
+    sort(S10_15.begin(), S10_15.end(), rule);
+    sort(S16_a.begin(), S16_a.end(), rule);
+
     bool stop = false;
 
     while(!stop){
         int option;
-        cout << "[1] 1-5    [2] 6-9    [3] 10-15    [4] 16-A    [5] exit" << endl; // display option, prompt for input
+
+        // display option, prompt for input
+        cout << "[1] Word Length 1-5    [2] Word Length 6-9    [3] Word Length 10-15    [4] Word Length 16-A    [5] exit" << endl;
         cin >> option; // get input
 
-        switch (option){ // display according to selection
-            case 1:
-                system("clear");for (const auto &x : S1_5){cout << x << endl;}break;
-            case 2:
-                system("clear");for (const auto &x : S6_9){cout << x << endl;}break;
-            case 3:
-                system("clear");for (const auto &x : S10_15){cout << x << endl;}break;
-            case 4:
-                system("clear");for (const auto &x : S16_a){cout << x << endl;}break;
-            case 5:
-                system("clear");stop = true;break;
-            default:
-                system("clear");cout << "UNKNOWN OPTION" << endl;break;
+
+        if(option == 1){
+            system("clear");
+            print(S1_5);
+        }else if(option == 2){
+            system("clear");
+            print(S6_9);
+        }else if(option == 3){
+            system("clear");
+            print(S10_15);
+        }else if(option == 4){
+            system("clear");
+            print(S16_a);
+        }else if(option == 5){
+            system("clear");
+            stop = true;
+        }else{
+            system("clear");
+            cout << "<< OPTION UNKNOWN >>" << endl;
         }
     }
 }
