@@ -15,7 +15,7 @@ void print(const vector<string> &result){
     int count = 0;
     for (const auto &i : result) {
         cout << i;
-        for (int x = 0; x < 16 - i.length(); x++) {
+        for (auto x = 0; x < (int) (16 - i.length()); x++) {
             cout << " ";
         }
         count += 1;
